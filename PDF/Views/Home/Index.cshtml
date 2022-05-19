@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = null;
+    var operadorId = Context.Request?.Query?.FirstOrDefault(x => x.Key == "operadorLogistico_id").Value.ToString() ?? "0";
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+<div class="d-flex justify-content-center mt-5">
+    <div>
+        <h1 class="text-center informacao">Gerando Arquivo</h1>
+        <img style="margin-left: 25%!important;" width="50%" src="https://img.ibxk.com.br/2014/3/materias/4805475817181134.gif" />
+    </div>
+
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        window.location = '@Url.Action("DownloadCSV", "Home")?operadorLogistico_id=@operadorId';
+
+        setTimeout(function () {
+            window.close();
+        }, 15000);
+    });
+</script>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>\\servidor02\InetPub\acheonline.com.br\adm\csvDownloads</_PublishTargetUrl>
+    <History>True|2022-05-19T16:40:38.9273679Z;True|2022-05-19T10:44:50.7674751-03:00;True|2022-05-19T10:32:35.6065295-03:00;True|2022-05-19T10:28:49.3265685-03:00;True|2022-05-19T10:27:25.8436460-03:00;True|2022-05-19T10:25:01.5097118-03:00;False|2022-05-19T10:24:05.2241525-03:00;True|2022-05-19T10:22:16.7296794-03:00;True|2022-05-19T10:20:45.3356810-03:00;True|2022-05-19T10:02:03.6967045-03:00;True|2022-05-18T18:18:45.2239653-03:00;True|2022-05-18T18:12:58.6193331-03:00;</History>
+  </PropertyGroup>
+</Project>
