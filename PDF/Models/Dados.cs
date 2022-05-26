@@ -10,8 +10,8 @@ namespace PDF.Models
         public string PedidoEnviado { get; set; }
         public string Barra { get; set; }
         public int Qtd_Pedido { get; set; }
-        public string DataPedido { get; set; }
-        public int Qtd_Atendida { get; set; }
+        public DateTime DataPedido { get; set; }
+        public int Qtd_Atendida_ret { get; set; }
         public string Observacao { get; set; }
         public string Qtd_Atendida_Not { get; set; }
         public string NumeroNotaPedido { get; set; }

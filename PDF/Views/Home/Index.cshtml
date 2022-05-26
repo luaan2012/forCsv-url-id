@@ -2,28 +2,69 @@
     ViewData["Title"] = "Home Page";
     Layout = null;
     var operadorId = Context.Request?.Query?.FirstOrDefault(x => x.Key == "operadorLogistico_id").Value.ToString() ?? "0";
+    var operadorGrupo = Context.Request?.Query?.FirstOrDefault(x => x.Key == "operadorgrupo").Value.ToString() ?? "0";
+    var qtd = Context.Request?.Query?.FirstOrDefault(x => x.Key == "Qtd").Value.ToString() ?? "0";
+    var rede = Context.Request?.Query?.FirstOrDefault(x => x.Key == "rede").Value.ToString() ?? "0";
+
+
+    var verificar = Context.Request?.Query?.FirstOrDefault(x => x.Key == "parm").Value.ToString() ?? "dn";
+
 }
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="~/css/site.css" />
 
-<div class="d-flex justify-content-center mt-5">
+<div class="d-flex justify-content-center mt-5" onload="window.opener='';OpenMyWin()">
     <div>
         <h1 class="text-center informacao">Gerando Arquivo</h1>
         <img style="margin-left: 25%!important;" width="50%" src="https://img.ibxk.com.br/2014/3/materias/4805475817181134.gif" />
-    </div>
-
+    </div>        
 </div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    $(document).ready(function () {
 
-        window.location = '@Url.Action("DownloadCSV", "Home")?operadorLogistico_id=@operadorId';
-
-        setTimeout(function () {
-            window.close();
-        }, 15000);
+     $(document).ready(function () {
+        var verificar = '@verificar';
+        if (verificar == '0') {
+            $.post('@Url.Action("DownloadCSVPedido", "Home")?operadorLogistico_id=@operadorId&operadorLogistico_grupo_id=@operadorGrupo&diasAte=@qtd&origem=@rede', function (result) {
+                var base64 = "data:text/csv;base64," + result;
+                var a = document.createElement("a"); 
+                a.href = base64;
+                a.download = "Pendencias"; 
+                a.click(); 
+                setTimeout(function () {
+                    window.close();
+                }, 1000);
+            });
+        }
+        else if (verificar == '1') {
+            $.post('@Url.Action("DownloadCSV", "Home")?operadorLogistico_id=@operadorId', function (result) {
+                var base64 = "data:text/csv;base64," + result;
+                var a = document.createElement("a"); 
+                a.href = base64;
+                a.download = "PedidosxNfs";
+                a.click(); 
+                setTimeout(function () {
+                    window.close();
+                }, 1000);
+            });
+        } else if (verificar == '2') {
+            $.post('@Url.Action("DownloadCSVAnterior", "Home")?operadorLogistico_id=@operadorId', function (result) {
+                var base64 = "data:text/csv;base64," + result;
+                var a = document.createElement("a");
+                a.href = base64;
+                a.download = "PedidosxNfsAnterior"; 
+                a.click();
+                setTimeout(function () {
+                    window.close();
+                }, 1000);
+            });
+        }
     });
+
+
 </script>
+
+

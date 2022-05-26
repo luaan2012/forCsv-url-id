@@ -92,7 +92,47 @@ namespace PDF.Database
 
             return default;
         }
-   
+
+        public string GetJson(string command, List<SqlParameter> parameters = null, CommandType type = CommandType.StoredProcedure)
+        {
+            var connection = new SqlConnection(_connectionString);
+            var cmd = new SqlCommand(command, connection);
+            cmd.CommandTimeout = 60;
+            var json = string.Empty;
+            cmd.CommandType = type;
+            if (parameters != null)
+                cmd.Parameters.AddRange(parameters.ToArray());
+            try
+            {
+                connection.Open();
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                    if (reader[0] != null)
+                        json = reader[0].ToString();
+            }
+            catch (Exception e)
+            {
+                e.Data.Add("DBHelper", "Portal.DB.Helper GetJson");
+                e.Data.Add("Command", command);
+                e.Data.Add("Parametros", string.Join(", ", parameters.Select(x => $"{x.ParameterName} = {x.Value?.ToString()}")));
+                if (e is SqlException sqlErro)
+                {
+                    e.Data.Add("WorkStation", connection.WorkstationId);
+                    e.Data.Add("DataBase", connection.Database);
+                    e.Data.Add("Ambiente", sqlErro.Server);
+                }
+
+                // throw e;
+            }
+            finally
+            {
+                connection.Dispose();
+                cmd.Dispose();
+            }
+            //var parametros = string.Join(", ", parameters.Select(x => $"{x.ParameterName} = {x.Value?.ToString()}"));
+            return json;
+        }
+
     }
 }
 
